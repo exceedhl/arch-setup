@@ -1,0 +1,34 @@
+# partition
+gdisk
+mkswap /dev/sda2
+mount /dev/sda1 /boot // create a EFI partition to mount as /boot
+
+# EFI and grub boot setup
+pacman -S os-prober lvm2 linux
+vi /etc/mkinitcpio.conf
+mkinitcpio -p linux
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
+grub-mkconfig -o /boot/grub/grub.cfg 
+vi /boot/startup.nsh // fix some EFI boot issue
+
+# virtual box stuff
+vim /etc/modules-load.d/virtualbox.conf
+modprobe -a vboxguest
+modprobe vboxdrv
+pacman -S virtualbox-guest-modules-arch
+# network setup
+- install dhcpcd networkmanager net-tools
+- /etc/hostname
+
+lspci -v
+dmesg | grep <network interface name>
+ip link set enp0s3 up
+systemctl enable dhcpcd
+cp /etc/netctl/examples/ethernet-dhcp /etc/netctl/interfaces/en0
+vim /etc/netctl/interfaces/en0 
+
+# general setup
+- add pacman Chinese mirror
+
+# X stuff
+systemctl start gdm.service

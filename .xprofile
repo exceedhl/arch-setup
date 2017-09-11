@@ -1,0 +1,5 @@
+compton &
+nitrogen --restore
+xset fp+ $HOME/.fonts/misc
+xset fp+ $HOME/.fonts/terminesspowerline
+xrandr --output VGA-1 --mode 1440x900
